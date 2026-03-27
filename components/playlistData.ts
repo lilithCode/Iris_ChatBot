@@ -1,32 +1,37 @@
 export const TRACKS = [
   {
-    name: "Too lazy to open spotify",
-    file: "Bairan.mp3",
-    cover: "/covers/Bairan.jpg",
+    name: "Dandelion Wishes",
+    file: "niko.mp3",
+    cover: "/covers/niko.jpg",
   },
   {
-    name: "Create a Universe",
-    file: "Creat a Universe.mp3",
-    cover: "/covers/createUniverse.jpg",
+    name: "Tiny Heartbeats",
+    file: "zoon out.mp3",
+    cover: "/covers/zoon out.jpg",
   },
   {
-    name: "Lost Soul",
-    file: "Lost Soul.mp3",
-    cover: "/covers/lostSoul-cover.jpg",
+    name: "Let's move to Japan",
+    file: "train.mp3",
+    cover: "/covers/Train.jpg",
   },
   {
-    name: "Into The Abyss",
-    file: "Into The Abyss.mp3",
-    cover: "/covers/cover.jpg",
+    name: "Daydream",
+    file: "kuro niko.mp3",
+    cover: "/covers/kuro niko.jpg",
   },
   {
-    name: "Night City",
-    file: "Night City.mp3",
-    cover: "/covers/nightCity-cover.jpg",
+    name: "Quiet Afternoons",
+    file: "doors.mp3",
+    cover: "/covers/doors.jpg",
   },
   {
     name: "I Really Wanna Stay At Your House",
     file: "I Really Wanna Stay At Your House.mp3",
-    cover: "/covers/stayYourHouse-cover.jpg",
+    cover: "/covers/i really wanna stay at your house.jpg",
+  },
+  {
+    name: "Stay With Me",
+    file: "Stay with me.mp3",
+    cover: "/covers/stay with me.jpg",
   },
 ];

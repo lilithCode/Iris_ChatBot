@@ -1,100 +1,55 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cyber-cyan: #00f3ff;
-  --color-cyber-magenta: #ff00ff;
-  --color-cyber-yellow: #fcee0a;
+  --color-aesthetic-lavender: #DCD0FF;
+  --color-aesthetic-purple: #B19CD9;
+  --color-aesthetic-darkPurple: #7A5C91;
+  --color-aesthetic-sakura: #FFD1DC;
+  --color-aesthetic-cloud: #F8F9FF;
+  --color-aesthetic-navy: #1A1B35;
+  --radius-xl-plus: 2rem;
 }
 
 @layer base {
   body {
-    @apply bg-black text-white/90 overflow-hidden font-mono selection:bg-cyber-cyan selection:text-black;
-    cursor: none !important;
-  }
-
-  @media (pointer: coarse) {
-    body {
-      cursor: auto !important;
-    }
+    @apply bg-[#E9E4F5] text-[#5D54A4] overflow-hidden font-sans;
+    @apply selection:bg-aesthetic-purple selection:text-white;
   }
 }
 
 @layer utilities {
-  
-    .clip-chamfer-left {
-      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
-    }
-  
-     .cyber-panel {
-       background: rgba(0, 0, 0, 0.2);
-       border: 1px solid rgba(0, 243, 255, 0.2);
-     }
-  .cyber-glass {
-    @apply bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl;
+  .soft-glass {
+    @apply bg-white/40 backdrop-blur-xl border-4 border-white/80 shadow-2xl;
+    box-shadow: 0 8px 32px rgba(122, 92, 145, 0.15), inset 0 0 20px rgba(175, 134, 202, 0.5);
+    border-radius: 2.5rem;
   }
 
-  .clip-chamfer {
-    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px),
-        calc(100% - 20px) 100%, 0 100%, 0 20px);
+  .panel-border {
+    @apply border-2 border-aesthetic-purple/30 rounded-[2.5rem] relative;
   }
 
-  .clip-cyber {
-    clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 8% 100%, 0 92%);
+  .panel-border::before {
+    content: '';
+    @apply absolute -inset-1 border-2 border-aesthetic-sakura/40 rounded-[2.7rem] -z-10 pointer-events-none;
   }
 
-  @media (max-width: 1024px) {
-    .clip-cyber {
-      clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
-    }
-
-    .clip-chamfer {
-      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px),
-          calc(100% - 10px) 100%, 0 100%, 0 10px);
-    }
+  .msg-bubble-user {
+    @apply rounded-[1.5rem] rounded-tr-none bg-gradient-to-br from-aesthetic-purple to-aesthetic-darkPurple text-white shadow-md;
   }
 
-  .clip-msg-bot {
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+  .msg-bubble-bot {
+    @apply rounded-[1.5rem] rounded-tl-none bg-white/90 border-2 border-aesthetic-lavender text-aesthetic-darkPurple shadow-sm;
   }
 
-  .clip-msg-user {
-    clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+  .bg-clouds {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M25 40a15 15 0 1 1 30 0 15 15 0 1 1 30 0 15 15 0 1 1-60 0z' fill='%23B19CD9' fill-opacity='0.1'/%3E%3C/svg%3E");
   }
 
-  .neon-border-cyan {
-    border: 1px solid rgba(0, 243, 255, 0.4);
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+  .scrollbar-cute::-webkit-scrollbar {
+    width: 6px;
   }
 
-  .neon-border-magenta {
-    border: 1px solid rgba(255, 0, 255, 0.4);
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
-  }
-
-  .animate-spin-slow {
-    animation: spin 12s linear infinite;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  .scrollbar-cyber::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .scrollbar-cyber::-webkit-scrollbar-thumb {
-    background: #00f3ff;
-    box-shadow: 0 0 10px #00f3ff;
+  .scrollbar-cute::-webkit-scrollbar-thumb {
+    @apply bg-aesthetic-purple/40 rounded-full;
   }
 }

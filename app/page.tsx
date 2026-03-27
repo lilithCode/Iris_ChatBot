@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
-import CyberCursor from "@/components/CyberCursor";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 import LoadingScreen from "@/components/LoadingScreen";
 import LeftPanel from "@/components/LeftPanel";
 import ChatPanel from "@/components/ChatPanel";
 import RightPanel from "@/components/RightPanel";
 import AboutModal from "@/components/AboutModal";
+import SenpaiAvatar from "@/components/SenpaiAvatar";
 
 export default function Home() {
   const [bootProgress, setBootProgress] = useState(0);
@@ -19,14 +20,13 @@ export default function Home() {
   const [activeMobilePanel, setActiveMobilePanel] = useState<
     "chat" | "left" | "right"
   >("chat");
-
   const [messages, setMessages] = useState<any[]>([]);
   const [history, setHistory] = useState<any[]>([]);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem("amadeus_sessions");
+    const savedHistory = localStorage.getItem("Iris_sessions");
     if (savedHistory) {
       try {
         setHistory(JSON.parse(savedHistory));
@@ -38,7 +38,7 @@ export default function Home() {
 
   useEffect(() => {
     if (history.length > 0)
-      localStorage.setItem("amadeus_sessions", JSON.stringify(history));
+      localStorage.setItem("Iris_sessions", JSON.stringify(history));
   }, [history]);
 
   useEffect(() => {
@@ -51,7 +51,6 @@ export default function Home() {
   const initializeSystem = () => {
     setIsInitialized(true);
     setIsPlaying(true);
-    playSfx("receive");
   };
 
   const playSfx = (type: string) => {
@@ -122,111 +121,109 @@ export default function Home() {
   };
 
   return (
-    <main className="relative h-screen w-screen bg-[#020203] overflow-hidden font-mono">
-      <div className="hidden md:block">
-        <CyberCursor />
-      </div>
-
-      <div
-        className={`absolute inset-0 z-0 bg-cover bg-center transition-all duration-1000 ${
-          activeMobilePanel !== "chat" ? " brightness-[0.5]" : "opacity-30"
-        }`}
-        style={{
-          backgroundImage: "url('/background.png')",
-          backgroundPosition: "center 20%",
-          filter: "brightness(0.5)",
-        }}
-      />
+    <main className="relative h-screen w-screen bg-[#F4EEFF] bg-clouds overflow-hidden">
       <AnimatePresence mode="wait">
         {!isInitialized ? (
-          <LoadingScreen
+          <motion.div
             key="loader"
-            progress={bootProgress}
-            onInitialize={initializeSystem}
-          />
-        ) : (
-          <div
-            key="app"
-            className="relative z-10 flex h-full w-full gap-2 lg:gap-5 p-2 lg:p-6 max-w-[1920px] mx-auto overflow-hidden"
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-[100]"
           >
+            <LoadingScreen
+              progress={bootProgress}
+              onInitialize={initializeSystem}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="dashboard"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative z-10 flex h-full w-full gap-4 md:gap-6 p-4 md:p-6 max-w-[1600px] mx-auto"
+          >
+            {/* Mobile Overlay for blurring background */}
+            {activeMobilePanel !== "chat" && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={() => setActiveMobilePanel("chat")}
+                className="fixed inset-0 bg-aesthetic-darkPurple/20 backdrop-blur-md z-[55] xl:hidden"
+              />
+            )}
+
+            {/* Left Panel */}
             <div
               className={`
-              fixed inset-0 z-[110] transition-transform duration-500
-              xl:relative xl:inset-auto xl:translate-x-0 xl:flex xl:w-80
-              ${activeMobilePanel === "left" ? "translate-x-0" : "-translate-x-full"}
+              ${activeMobilePanel === "left" ? "fixed inset-y-4 left-4 z-[60] flex w-[280px]" : "hidden"} 
+              xl:relative xl:flex xl:w-80 xl:bg-transparent xl:p-0
             `}
             >
-              <div
-                className="absolute inset-0 bg-black/80 backdrop-blur-md xl:hidden"
-                onClick={() => setActiveMobilePanel("chat")}
-              />
-              <div className="relative w-72 md:w-80 h-full">
+              <div className="w-full h-full relative">
                 <LeftPanel
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   currentTrack={currentTrack}
-                  setCurrentTrack={setCurrentTrack}
-                  playSfx={playSfx}
+                  setCurrentTrack={(i: number) => {
+                    setCurrentTrack(i);
+                    if (window.innerWidth < 1280) setActiveMobilePanel("chat");
+                  }}
                 />
               </div>
             </div>
 
+            {/* Main Chat */}
+            <div
+              className={`flex-1 min-w-0 ${activeMobilePanel !== "chat" ? "hidden md:flex" : "flex"}`}
+            >
+              <ChatPanel
+                messages={messages}
+                input={input}
+                setInput={setInput}
+                handleSend={handleSend}
+                startNewChat={() => {
+                  setMessages([]);
+                  setActiveSessionId(null);
+                }}
+                isLoading={isLoading}
+                onToggleLeft={() =>
+                  setActiveMobilePanel(
+                    activeMobilePanel === "left" ? "chat" : "left",
+                  )
+                }
+                onToggleRight={() =>
+                  setActiveMobilePanel(
+                    activeMobilePanel === "right" ? "chat" : "right",
+                  )
+                }
+              />
+            </div>
+
+            {/* Right Panel */}
             <div
               className={`
-                flex-1 flex gap-2 lg:gap-5 transition-all duration-500
-                ${activeMobilePanel === "left" ? "blur-xl opacity-20 pointer-events-none xl:blur-0 xl:opacity-100" : ""}
+              ${activeMobilePanel === "right" ? "fixed inset-y-4 right-4 z-[60] flex w-[280px]" : "hidden"} 
+              lg:relative lg:flex lg:w-80 lg:bg-transparent lg:p-0
             `}
             >
-              <div
-                className={`flex-1 min-w-0 h-full transition-all duration-500 ${activeMobilePanel === "right" ? "blur-xl opacity-20 pointer-events-none lg:blur-0 lg:opacity-100" : ""}`}
-              >
-                <ChatPanel
-                  messages={messages}
-                  input={input}
-                  setInput={setInput}
-                  handleSend={handleSend}
-                  startNewChat={() => {
-                    setMessages([]);
-                    setActiveSessionId(null);
+              <div className="w-full h-full relative">
+                <RightPanel
+                  history={history}
+                  activeSessionId={activeSessionId}
+                  loadSession={(s: any) => {
+                    loadSession(s);
+                    setActiveMobilePanel("chat");
                   }}
-                  isLoading={isLoading}
-                  onToggleLeft={() => setActiveMobilePanel("left")}
-                  onToggleRight={() => setActiveMobilePanel("right")}
+                  openAbout={() => setShowAbout(true)}
+                  isPlaying={isPlaying}
                 />
-              </div>
-
-              <div
-                className={`
-                fixed inset-0 z-[110] transition-transform duration-500
-                lg:relative lg:inset-auto lg:translate-x-0 lg:flex lg:w-72 xl:w-80
-                ${activeMobilePanel === "right" ? "translate-x-0" : "translate-x-full lg:translate-x-0"}
-              `}
-              >
-                <div
-                  className="absolute inset-0 bg-black/80 backdrop-blur-md lg:hidden"
-                  onClick={() => setActiveMobilePanel("chat")}
-                />
-                <div className="relative w-72 md:w-80 h-full ml-auto">
-                  <RightPanel
-                    isPlaying={isPlaying}
-                    history={history}
-                    activeSessionId={activeSessionId}
-                    loadSession={loadSession}
-                    openAbout={() => setShowAbout(true)}
-                    playSfx={playSfx}
-                  />
-                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      <AboutModal
-        isOpen={showAbout}
-        onClose={() => setShowAbout(false)}
-        playSfx={playSfx}
-      />
+      <SenpaiAvatar />
+      <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
     </main>
   );
 }

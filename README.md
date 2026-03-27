@@ -1,20 +1,20 @@
-# AMADEUS_SENPAI
+# AMADEUS
 
-[![Framework: Next.js](https://img.shields.io/badge/Framework-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Framework: Next.js 15](https://img.shields.io/badge/Framework-Next.js%2015-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![Model: Llama-3](https://img.shields.io/badge/Model-Llama--3--8B-blue?style=flat-square)](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
-[![Training: Unsloth](https://img.shields.io/badge/Training-Unsloth-orange?style=flat-square)](https://github.com/unslothai/unsloth)
+[![Backend: Hugging Face](https://img.shields.io/badge/Backend-Hugging%20Face%20Spaces-yellow?style=flat-square&)](https://huggingface.co/spaces/lillilith-amadeus-rag)
 [![UI: Cyberpunk](https://img.shields.io/badge/UI-Cyberpunk--Theme-ff00ff?style=flat-square)](https://tailwindcss.com/)
-
 
 Let’s be real standard AI has zero aura. It’s too polite, too robotic, and honestly? Just mid. So I decided to cook something different. I took 12k+ real world WhatsApp messages from my friend “senpai” and basically baked her entire personality into a Llama-3 8B model, Trained it on Kaggle , used Hugging face as backend and nextjs as frontend.
 
 You can explore the project here:
 
-**Live Website:**  
-https://amadeus-brown-mu.vercel.app/
 
-**Kaggle Training Notebook:**  
-https://www.kaggle.com/code/hamnamubarak/amadeus
+[Visit the Live App](https://amadeus-rag.vercel.app/)
+
+[View on Kaggle](https://www.kaggle.com/code/hamnamubarak/amadeus)
+
+[Open Hugging Face Space](https://huggingface.co/spaces/lillilith-amadeus-rag)
 
 ---
 
@@ -72,8 +72,8 @@ After training, the model was exported in **GGUF format (Q4_K_M quantization)**.
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/lilithCode/Amadeus.git
-   cd Amadeus
+   git clone https://github.com/lilithCode/Amadeus_RAG.git
+   cd Amadeus-RAG
    ```
 
 2. **Install frontend dependencies**

@@ -9,16 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cyber: {
-          cyan: "#00f3ff",
-          magenta: "#ff00ff",
-          yellow: "#fcee0a",
-          dark: "#050508",
+        aesthetic: {
+          lavender: "#DCD0FF",
+          purple: "#B19CD9",
+          darkPurple: "#7A5C91",
+          sakura: "#FFD1DC",
+          cloud: "#F8F9FF",
+          navy: "#1A1B35", 
         },
       },
-      backgroundImage: {
-        // This creates that subtle grid pattern seen in sci-fi UIs
-        'cyber-grid': "linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px)",
+      borderRadius: {
+        "xl-plus": "2rem",
       },
     },
   },

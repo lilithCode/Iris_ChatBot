@@ -2,36 +2,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus,
-  Terminal,
   Send,
-  Music,
+  Heart,
+  Menu,
   History as HistoryIcon,
+  Sparkles,
+  X,
 } from "lucide-react";
 import { useEffect, useRef } from "react";
-
-// --- Moving Dots Animation Component ---
-const TypingDots = () => {
-  return (
-    <div className="flex gap-1.5 px-2 py-1 items-center">
-      {[0, 1, 2].map((dot) => (
-        <motion.div
-          key={dot}
-          className="w-1.5 h-1.5 bg-cyber-cyan rounded-full shadow-[0_0_5px_#00f3ff]"
-          animate={{
-            y: [0, -6, 0],
-            opacity: [0.4, 1, 0.4],
-          }}
-          transition={{
-            duration: 0.8,
-            repeat: Infinity,
-            delay: dot * 0.15,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 export default function ChatPanel({
   messages,
@@ -50,136 +28,136 @@ export default function ChatPanel({
   }, [messages, isLoading]);
 
   return (
-    <section className="flex-1 flex flex-col h-full cyber-panel neon-border-cyan z-20 overflow-hidden md:clip-chamfer bg-black/20">
-      {/* Header */}
-      <div className="bg-black/40 p-3 md:p-4 border-b border-white/10 flex justify-between items-center flex-shrink-0">
-        <div className="flex items-center gap-3 ">
+    <section className="flex-1 flex flex-col h-full soft-glass overflow-hidden panel-border !bg-white/30">
+      <div className="bg-white/60 p-4 md:p-5 border-b-2 border-aesthetic-lavender flex justify-between items-center backdrop-blur-md">
+        <div className="flex items-center gap-3">
           <button
             onClick={onToggleLeft}
-            className="xl:hidden p-2 text-cyber-cyan border border-cyber-cyan/30 hover:bg-cyber-cyan/10 transition-all clip-chamfer"
+            className="xl:hidden p-2 bg-white text-aesthetic-purple rounded-full shadow-sm"
           >
-            <Music size={18} />
+            <Menu size={20} />
           </button>
 
-          <div className="flex items-center gap-2 md:gap-3 ">
-            <div className="w-8 h-8 md:w-10 md:h-10 border border-cyber-cyan rounded-full p-0.5 shrink-0">
+          <div className="relative group cursor-pointer">
+            <div className="absolute -inset-1 bg-gradient-to-tr from-aesthetic-purple to-aesthetic-sakura rounded-full blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
+            <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full border-4 border-white shadow-xl overflow-hidden shrink-0 transform group-hover:scale-105 transition-transform">
               <img
                 src="/profile.jpg"
-                className="w-full h-full rounded-full object-cover opacity-80"
-                alt="profile"
+                className="w-full h-full object-cover"
+                alt="Iris HD Profile"
               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-black italic text-[10px] md:text-sm tracking-tighter text-cyber-cyan uppercase truncate max-w-[120px] xs:max-w-none">
-                Amadeus_Senpai
+          </div>
+
+          <div>
+            <h2 className="font-black text-xl md:text-2xl tracking-tighter bg-gradient-to-r from-aesthetic-darkPurple via-aesthetic-purple to-aesthetic-sakura bg-clip-text text-transparent flex items-center gap-2 ">
+              Iris <span className="text-aesthetic-sakura not-italic"></span>
+            </h2>
+            <div className="flex items-center gap-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-aesthetic-sakura opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-aesthetic-purple"></span>
               </span>
-              <div className="flex items-center gap-1">
-                <span
-                  className={`w-1 h-1 rounded-full ${isLoading ? "bg-cyber-cyan animate-ping" : "bg-cyber-cyan animate-pulse"}`}
-                />
-                <span className="text-[6px] md:text-[8px] text-cyber-cyan/50 tracking-[0.2em]">
-                  ONLINE
-                </span>
-              </div>
+              <p className="text-[10px] font-black text-aesthetic-purple uppercase tracking-[0.2em]">
+                Online
+              </p>
             </div>
+          </div>
+
+          <div className="hidden xs:block">
+            <h2 className="font-black text-aesthetic-darkPurple text-sm md:text-lg flex items-center gap-2">
+              <span style={{ color: "#FFD1DC" }}>Iris</span>
+              <span style={{ fontSize: "0.8em", color: "#B19CD9" }}>_v1.0</span>
+              <Sparkles size={14} className="text-aesthetic-purple" />
+            </h2>
+            <p className="text-[9px] font-bold text-aesthetic-purple uppercase tracking-widest">
+              System Online
+            </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={startNewChat}
-            disabled={isLoading}
-            className={`p-2 border border-cyber-cyan text-cyber-cyan transition-all clip-chamfer ${isLoading ? "opacity-20 cursor-not-allowed" : "hover:bg-cyber-cyan hover:text-black"}`}
+            className="p-3 bg-aesthetic-sakura text-white rounded-2xl shadow-sm hover:scale-105 transition-transform"
           >
             <Plus size={20} />
           </button>
-
           <button
             onClick={onToggleRight}
-            className="lg:hidden p-2 text-cyber-magenta border border-cyber-magenta/30 hover:bg-cyber-magenta/10 transition-all clip-chamfer"
+            className="lg:hidden p-3 bg-white text-aesthetic-purple rounded-2xl shadow-sm"
           >
-            <HistoryIcon size={18} />
+            <HistoryIcon size={20} />
           </button>
         </div>
       </div>
 
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 scrollbar-cyber">
-        {messages.length === 0 && !isLoading && (
-          <div className="h-full flex flex-col items-center justify-center opacity-20">
-            <Terminal size={32} className="mb-2" />
-            <p className="text-[8px] md:text-[10px] uppercase tracking-[0.4em]">
-              Awaiting Link...
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-cute bg-clouds/30">
+        {messages.length === 0 && (
+          <div className="h-full flex flex-col items-center justify-center opacity-40 text-center space-y-4">
+            <div className="w-20 h-20 rounded-full border-4 border-dashed border-aesthetic-purple flex items-center justify-center">
+              <Heart size={32} className="text-aesthetic-purple" />
+            </div>
+            <p className="font-black uppercase text-xs tracking-tighter">
+              Initialize conversation sequence...
             </p>
           </div>
         )}
 
-        <AnimatePresence mode="popLayout">
-          {messages.map((msg: any, i: number) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+        {messages.map((msg: any, i: number) => (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            key={i}
+            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+          >
+            <div
+              className={`px-6 py-3.5 max-w-[85%] text-sm font-bold tracking-tight shadow-lg ${msg.role === "user" ? "msg-bubble-user" : "msg-bubble-bot"}`}
             >
-              <div
-                className={`px-4 py-3 md:px-6 md:py-4 max-w-[85%] md:max-w-[75%] text-xs md:text-sm font-medium ${
-                  msg.role === "user"
-                    ? "bg-cyber-magenta/20 text-white clip-msg-user border-r-2 border-cyber-magenta shadow-[0_0_20px_rgba(255,0,255,0.05)]"
-                    : "bg-cyber-cyan/15 text-white clip-msg-bot border-l-2 border-cyber-cyan shadow-[0_0_20px_rgba(0,243,255,0.05)]"
-                }`}
-              >
-                {msg.content}
-              </div>
-            </motion.div>
-          ))}
-
-          {/* --- MOVING DOTS INDICATOR --- */}
-          {isLoading && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex justify-start"
-            >
-              <div className="bg-cyber-cyan/10 border-l-2 border-cyber-cyan px-4 py-3 clip-msg-bot">
-                <TypingDots />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {msg.content}
+            </div>
+          </motion.div>
+        ))}
+        {isLoading && (
+          <div className="flex justify-start">
+            <div className="msg-bubble-bot px-6 py-3 flex gap-1">
+              <motion.span
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ repeat: Infinity, duration: 1 }}
+                className="w-1.5 h-1.5 bg-aesthetic-purple rounded-full"
+              />
+              <motion.span
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
+                className="w-1.5 h-1.5 bg-aesthetic-purple rounded-full"
+              />
+              <motion.span
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
+                className="w-1.5 h-1.5 bg-aesthetic-purple rounded-full"
+              />
+            </div>
+          </div>
+        )}
         <div ref={scrollRef} />
       </div>
 
-      {/* Input / Button Footer */}
-      <div className="p-3 md:p-6 bg-black/60 border-t border-white/10 flex gap-2 md:gap-3 flex-shrink-0">
-        <div
-          className={`flex-1 relative flex items-center bg-white/5 border border-white/10 clip-chamfer px-3 md:px-4 transition-all duration-300 ${isLoading ? "opacity-30" : "opacity-100"}`}
-        >
-          <Terminal className="text-cyber-yellow hidden xs:block" size={14} />
+      <div className="p-4 md:p-6 bg-white/80 border-t-2 border-aesthetic-lavender flex gap-3 backdrop-blur-md">
+        <div className="flex-1 bg-white border-2 border-aesthetic-lavender rounded-3xl px-6 flex items-center shadow-inner">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && !isLoading && handleSend()}
-            disabled={isLoading}
-            placeholder={isLoading ? "NEURAL_LINK_BUSY..." : "TYPE_MSG..."}
-            className="w-full p-2 md:p-3 bg-transparent text-white outline-none font-mono text-[10px] md:text-xs italic disabled:cursor-wait"
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            placeholder="Send a thought..."
+            className="w-full py-4 bg-transparent outline-none text-aesthetic-darkPurple font-bold text-sm placeholder:text-aesthetic-purple/40"
           />
         </div>
-
         <button
           onClick={handleSend}
-          disabled={isLoading || !input.trim()}
-          className={`px-4 md:px-8 font-black uppercase text-[10px] clip-chamfer flex items-center gap-2 transition-all duration-300
-            ${
-              isLoading || !input.trim()
-                ? "bg-white/5 text-white/20 border border-white/10 cursor-not-allowed"
-                : "bg-cyber-cyan text-black hover:bg-white shadow-[0_0_15px_rgba(0,243,255,0.4)]"
-            }`}
+          disabled={!input.trim() || isLoading}
+          className="w-14 h-14 bg-gradient-to-br from-aesthetic-purple to-aesthetic-darkPurple text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg hover:brightness-110 active:scale-95 disabled:opacity-50 transition-all"
         >
-          <span className="hidden xs:inline">
-            {isLoading ? "WAIT" : "SEND"}
-          </span>
-          <Send size={12} className={isLoading ? "animate-pulse" : ""} />
+          <Send size={22} />
         </button>
       </div>
     </section>

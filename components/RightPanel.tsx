@@ -1,10 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { History, Info, Code, Activity, Github, Database } from "lucide-react";
+import {
+  History,
+  Heart,
+  Sparkles,
+  Github,
+  Database,
+  Code,
+  ExternalLink,
+  Smile,
+} from "lucide-react";
 
 export default function RightPanel({
-  playSfx,
   history,
   loadSession,
   activeSessionId,
@@ -12,108 +20,142 @@ export default function RightPanel({
   isPlaying,
 }: any) {
   const [showLinks, setShowLinks] = useState(false);
+  const [vHeights, setVHeights] = useState(Array(10).fill(20));
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setVHeights((prev) =>
+          prev.map(() => Math.floor(Math.random() * 70) + 20),
+        );
+      }, 150);
+    } else {
+      setVHeights(Array(10).fill(15));
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowLinks(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const links = [
     {
       name: "GitHub Repo",
-      icon: <Github size={14} />,
-      url: "https://github.com/lilithCode/Amadeus",
+      icon: <Github size={16} />,
+      url: "https://github.com/lilithCode/Iris",
+      color: "bg-aesthetic-purple",
     },
     {
       name: "Kaggle Notebook",
-      icon: <Database size={14} />,
-      url: "https://www.kaggle.com/code/hamnamubarak/amadeus",
+      icon: <Database size={16} />,
+      url: "https://www.kaggle.com/code/hamnamubarak/Iris",
+      color: "bg-[#6e3e8e]",
+    },
+    {
+      name: "Hugging Face Space",
+      icon: <Smile size={16} />,
+      url: "https://huggingface.co/spaces/lilLilith/Iris-RAG/tree/main",
+      color: "bg-[#452759]",
     },
   ];
 
   return (
     <aside className="w-full h-full flex flex-col gap-4 z-10">
-      <div className="cyber-glass neon-border-magenta p-4 lg:p-5 clip-cyber">
-        <div className="flex items-center gap-2 text-[9px] font-black text-cyber-magenta opacity-60 uppercase mb-4 italic">
-          <Activity size={12} /> neural_sync
+      <div className="soft-glass p-5 panel-border !bg-white/40">
+        <div className="flex items-center gap-2 text-[10px] font-black text-aesthetic-purple uppercase mb-4 italic tracking-widest">
+          <Sparkles size={14} /> beats
         </div>
-        <div className="h-10 lg:h-12 flex items-end gap-1">
-          {[40, 80, 50, 95, 70, 85, 45, 60, 30, 50].map((h, i) => (
+        <div className="h-16 flex items-end gap-2 px-2 bg-white/20 rounded-2xl p-3">
+          {vHeights.map((h, i) => (
             <motion.div
               key={i}
-              animate={
-                isPlaying
-                  ? { height: [`${h}%`, `${h - 40}%`, `${h}%`] }
-                  : { height: "10%" }
-              }
-              transition={{ repeat: Infinity, duration: 1.2, delay: i * 0.1 }}
-              className="flex-1 bg-cyber-magenta/80"
+              animate={{ height: `${h}%` }}
+              className={`flex-1 rounded-full ${isPlaying ? "bg-aesthetic-purple shadow-[0_0_10px_rgba(177,156,217,0.5)]" : "bg-aesthetic-lavender"}`}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             />
           ))}
         </div>
       </div>
 
-      <div className="flex-1 cyber-glass neon-border-cyan p-4 lg:p-5 flex flex-col overflow-hidden clip-cyber">
-        <div className="flex items-center gap-2 text-[10px] font-black text-cyber-cyan uppercase mb-6 border-b border-white/10 pb-2 italic">
-          <History size={14} /> session_logs
+      <div className="flex-1 soft-glass p-5 flex flex-col overflow-hidden panel-border !bg-white/40">
+        <div className="flex items-center gap-2 text-[11px] font-bold text-aesthetic-darkPurple uppercase mb-6 border-b-2 border-aesthetic-lavender pb-2">
+          <History size={16} /> Memory_Logs
         </div>
-        <div className="space-y-2 overflow-y-auto pr-1 scrollbar-hide lg:scrollbar-cyber">
-          {history.length === 0 && (
-            <div className="text-[9px] text-white/20 italic p-4 text-center">
-              NO_LOGS_AVAILABLE
-            </div>
-          )}
+        <div className="space-y-2 overflow-y-auto pr-1 scrollbar-cute">
           {history.map((h: any) => (
             <button
               key={h.id}
               onClick={() => loadSession(h)}
-              className={`w-full text-left text-[10px] font-bold p-3 border-l-2 transition-all italic flex flex-col gap-1 ${activeSessionId === h.id ? "bg-cyber-cyan/10 border-cyber-cyan text-cyber-cyan" : "border-transparent text-white/40 hover:text-white"}`}
+              className={`w-full text-left p-4 rounded-2xl transition-all flex flex-col gap-1 border-2 ${activeSessionId === h.id ? "bg-white border-aesthetic-sakura text-aesthetic-darkPurple shadow-md" : "border-transparent text-aesthetic-purple hover:bg-white/50"}`}
             >
-              <span className="truncate uppercase">{`> ${h.name}`}</span>
-              <span className="text-[8px] opacity-30 font-mono">{h.date}</span>
+              <span className="text-[11px] font-black truncate uppercase tracking-tighter">
+                {h.name}
+              </span>
+              <span className="text-[9px] opacity-60 font-medium">
+                {h.date}
+              </span>
             </button>
           ))}
         </div>
       </div>
 
-      <button
-        onClick={() => {
-          openAbout();
-          playSfx("send");
-        }}
-        className="cyber-glass border border-white/20 p-4 flex justify-between items-center group hover:bg-cyber-cyan/10 transition-all clip-chamfer"
-      >
-        <span className="text-[10px] font-black uppercase text-white/60 group-hover:text-white">
-          About_Amadeus
-        </span>
-        <Info size={16} className="text-cyber-cyan" />
-      </button>
+      <div ref={menuRef} className="relative space-y-3">
+        <button
+          onClick={openAbout}
+          className="w-full soft-glass p-4 flex justify-between items-center group hover:bg-white transition-all border-none panel-border shadow-lg"
+        >
+          <span className="text-[11px] font-black uppercase text-aesthetic-darkPurple">
+            About Iris
+          </span>
+          <Heart
+            size={18}
+            className="text-aesthetic-sakura fill-aesthetic-sakura group-hover:scale-125 transition-transform"
+          />
+        </button>
 
-      <div className="relative">
         <AnimatePresence>
           {showLinks && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="absolute bottom-full mb-2 w-full bg-[#0a0a0c] border border-cyber-yellow/30 p-2 space-y-1 z-50"
+              className="absolute bottom-full mb-3 w-full bg-white border-4 border-aesthetic-lavender rounded-[2rem] p-3 shadow-2xl z-50 space-y-2"
             >
               {links.map((link) => (
                 <a
                   key={link.name}
                   href={link.url}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-2 text-[10px] text-white/60 hover:text-cyber-yellow uppercase font-bold"
+                  className={`flex items-center justify-between p-3 rounded-xl text-white font-bold text-[10px] transition-transform hover:scale-[1.02] ${link.color}`}
                 >
-                  {link.icon} {link.name}
+                  <div className="flex items-center gap-3">
+                    {link.icon} {link.name}
+                  </div>
+                  <ExternalLink size={12} />
                 </a>
               ))}
             </motion.div>
           )}
         </AnimatePresence>
+
         <button
-          onClick={() => {
-            setShowLinks(!showLinks);
-            playSfx("send");
-          }}
-          className="w-full bg-cyber-yellow p-4 text-black font-black uppercase text-[10px] flex justify-between items-center px-6 hover:brightness-110 clip-chamfer transition-all"
+          onClick={() => setShowLinks(!showLinks)}
+          className={`w-full p-4 rounded-[2rem] font-black uppercase text-xs flex justify-between items-center px-8 transition-all shadow-xl border-4 border-white ${
+            showLinks
+              ? "bg-aesthetic-darkPurple text-white"
+              : "bg-aesthetic-purple text-white hover:brightness-105"
+          }`}
         >
-          Source_Code <Code size={16} />
+          Project_Links <Code size={18} />
         </button>
       </div>
     </aside>
