@@ -21,7 +21,7 @@ export const TRACKS = [
   },
   {
     name: "Quiet Afternoons",
-    file: "doors.mp3",
+    file: "door.mp3",
     cover: "/covers/doors.jpg",
   },
   {
