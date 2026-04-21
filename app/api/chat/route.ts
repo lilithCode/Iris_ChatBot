@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
     const HF_TOKEN = process.env.HF_TOKEN;
 
-    const SPACE_URL = "https://lillilith-amadeus-rag.hf.space/chat/";
+    const SPACE_URL = "https://lillilith-iris-rag.hf.space/chat/";
 
     const response = await fetch(SPACE_URL, {
       method: "POST",
