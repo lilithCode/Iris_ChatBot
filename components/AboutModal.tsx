@@ -47,8 +47,8 @@ export default function AboutModal({ isOpen, onClose }: any) {
               <div className="bg-aesthetic-cloud p-6 rounded-[2rem] border-2 border-aesthetic-lavender relative">
                 <p className="text-sm text-aesthetic-darkPurple leading-relaxed font-semibold italic">
                   I named this project{" "}
-                  <span className="text-[#b895d0]">Amadeus</span> because of
-                  Steins;Gate. In the anime, Amadeus is the AI that carries
+                  <span className="text-[#b895d0]">Iris</span> because of
+                  Steins;Gate. In the anime, Iris is the AI that carries
                   Kurisu Makise’s memories and personality, which I always
                   thought was such a cool and fascinating idea. It made AI feel
                   less like just code and more like something meaningful. So
