@@ -48,27 +48,27 @@ export default function AboutModal({ isOpen, onClose }: any) {
                 <p className="text-sm text-aesthetic-darkPurple leading-relaxed font-semibold italic">
                   I named this project{" "}
                   <span className="text-[#b895d0]">Iris</span> because of
-                  Steins;Gate. In the anime, Iris is the AI that carries
-                  Kurisu Makise’s memories and personality, which I always
-                  thought was such a cool and fascinating idea. It made AI feel
-                  less like just code and more like something meaningful. So
-                  this project is kind of my own tribute to that concept. I
-                  tried to recreate a small piece of that world and build
-                  something that feels a bit more human than a typical program,
-                  like a presence living inside the system.
+                  Steins;Gate. In the anime, Iris is the AI that carries Kurisu
+                  Makise’s memories and personality, which I always thought was
+                  such a cool and fascinating idea. It made AI feel less like
+                  just code and more like something meaningful. So this project
+                  is kind of my own tribute to that concept. I tried to recreate
+                  a small piece of that world and build something that feels a
+                  bit more human than a typical program, like a presence living
+                  inside the system.
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <a
-                  href="https://github.com/lilithCode/Iris"
+                  href="https://github.com/lilithCode/Iris_ChatBot"
                   target="_blank"
                   className="flex items-center justify-center gap-2 p-4 bg-aesthetic-darkPurple text-white rounded-2xl font-bold text-xs hover:scale-105 transition-transform"
                 >
                   <Github size={16} /> GitHub
                 </a>
                 <a
-                  href="https://www.kaggle.com/code/hamnamubarak/Iris"
+                  href="https://www.kaggle.com/code/hamnamubarak/iris-model/edit"
                   target="_blank"
                   className="flex items-center justify-center gap-2 p-4 bg-[#20BEFF] text-white rounded-2xl font-bold text-xs hover:scale-105 transition-transform"
                 >

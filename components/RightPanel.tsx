@@ -51,13 +51,13 @@ export default function RightPanel({
     {
       name: "GitHub Repo",
       icon: <Github size={16} />,
-      url: "https://github.com/lilithCode/Iris",
+      url: "https://github.com/lilithCode/Iris_ChatBot",
       color: "bg-aesthetic-purple",
     },
     {
       name: "Kaggle Notebook",
       icon: <Database size={16} />,
-      url: "https://www.kaggle.com/code/hamnamubarak/Iris",
+      url: "https://www.kaggle.com/code/hamnamubarak/iris-model/edit",
       color: "bg-[#6e3e8e]",
     },
     {
