@@ -14,7 +14,7 @@ You can explore the project here:
 
 [View on Kaggle](https://www.kaggle.com/code/hamnamubarak/iris-model/edit)
 
-[Open Hugging Face Space](https://huggingface.co/spaces/lillilith-iris-rag)
+[Open Hugging Face Space](https://huggingface.co/spaces/lilLilith/Iris-RAG/tree/main)
 
 ---
 
