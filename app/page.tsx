@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
 import LoadingScreen from "@/components/LoadingScreen";
 import LeftPanel from "@/components/LeftPanel";
 import ChatPanel from "@/components/ChatPanel";
@@ -76,19 +75,28 @@ export default function Home() {
     setIsLoading(true);
 
     try {
+      // THIS CALLS YOUR BACKEND ROUTE
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
+
       const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.details || data.error);
+      }
+
       const assistantMsg = {
         role: "assistant",
-        content: data.reply || "SYSTEM_OFFLINE",
+        content: data.reply || "Kk... I'm a bit busy right now. Baka!",
       };
+
       setMessages((prev) => [...prev, assistantMsg]);
       playSfx("receive");
 
+      // Session History Logic
       if (!activeSessionId) {
         const newId = Date.now().toString();
         setActiveSessionId(newId);
@@ -110,10 +118,11 @@ export default function Home() {
           ),
         );
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Chat Error:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "[SYSTEM_ERROR]" },
+        { role: "assistant", content: `[SYSTEM_ERROR]: ${error.message}` },
       ]);
     } finally {
       setIsLoading(false);
@@ -141,7 +150,6 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             className="relative z-10 flex h-full w-full gap-4 md:gap-6 p-4 md:p-6 max-w-[1600px] mx-auto"
           >
-            {/* Mobile Overlay for blurring background */}
             {activeMobilePanel !== "chat" && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -151,27 +159,20 @@ export default function Home() {
               />
             )}
 
-            {/* Left Panel */}
             <div
-              className={`
-              ${activeMobilePanel === "left" ? "fixed inset-y-4 left-4 z-[60] flex w-[280px]" : "hidden"} 
-              xl:relative xl:flex xl:w-80 xl:bg-transparent xl:p-0
-            `}
+              className={`${activeMobilePanel === "left" ? "fixed inset-y-4 left-4 z-[60] flex w-[280px]" : "hidden"} xl:relative xl:flex xl:w-80`}
             >
-              <div className="w-full h-full relative">
-                <LeftPanel
-                  isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                  currentTrack={currentTrack}
-                  setCurrentTrack={(i: number) => {
-                    setCurrentTrack(i);
-                    if (window.innerWidth < 1280) setActiveMobilePanel("chat");
-                  }}
-                />
-              </div>
+              <LeftPanel
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+                currentTrack={currentTrack}
+                setCurrentTrack={(i: number) => {
+                  setCurrentTrack(i);
+                  if (window.innerWidth < 1280) setActiveMobilePanel("chat");
+                }}
+              />
             </div>
 
-            {/* Main Chat */}
             <div
               className={`flex-1 min-w-0 ${activeMobilePanel !== "chat" ? "hidden md:flex" : "flex"}`}
             >
@@ -198,25 +199,16 @@ export default function Home() {
               />
             </div>
 
-            {/* Right Panel */}
             <div
-              className={`
-              ${activeMobilePanel === "right" ? "fixed inset-y-4 right-4 z-[60] flex w-[280px]" : "hidden"} 
-              lg:relative lg:flex lg:w-80 lg:bg-transparent lg:p-0
-            `}
+              className={`${activeMobilePanel === "right" ? "fixed inset-y-4 right-4 z-[60] flex w-[280px]" : "hidden"} lg:relative lg:flex lg:w-80`}
             >
-              <div className="w-full h-full relative">
-                <RightPanel
-                  history={history}
-                  activeSessionId={activeSessionId}
-                  loadSession={(s: any) => {
-                    loadSession(s);
-                    setActiveMobilePanel("chat");
-                  }}
-                  openAbout={() => setShowAbout(true)}
-                  isPlaying={isPlaying}
-                />
-              </div>
+              <RightPanel
+                history={history}
+                activeSessionId={activeSessionId}
+                loadSession={(s: any) => loadSession(s)}
+                openAbout={() => setShowAbout(true)}
+                isPlaying={isPlaying}
+              />
             </div>
           </motion.div>
         )}
