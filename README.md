@@ -59,7 +59,8 @@ After training, the model was exported in **GGUF format (Q4_K_M quantization)**.
 
 ### Backend 
 
-- **FastAPI** – Python API server
+- **Gradio + ZeroGPU** – Model served on Hugging Face Space
+- **Hack Club AI** – RAG query routing and Exa web search
 - **Llama-3B** – as Base model
 - **Hugging Face Spaces** – For hosting environment
 
@@ -85,7 +86,9 @@ After training, the model was exported in **GGUF format (Q4_K_M quantization)**.
 
 ## Environment Variables
 
+- AMADEUS_SPACE_URL — Hugging Face ZeroGPU Space URL (same Space as Amadeus)
 - HF_TOKEN — Hugging Face API token
+- HACKCLUB_AI_KEY — Hack Club AI key (used for RAG routing and web search)
 
 
 Production build:
