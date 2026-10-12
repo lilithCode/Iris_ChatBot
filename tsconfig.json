@@ -1,3 +1,4 @@
+// ts config for next
 {
   "compilerOptions": {
     "target": "ES2017",
