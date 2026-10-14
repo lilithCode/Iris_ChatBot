@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
+//displaly msgs
 export default function ChatPanel({
   messages,
   input,
