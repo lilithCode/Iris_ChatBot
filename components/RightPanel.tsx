@@ -57,7 +57,7 @@ export default function RightPanel({
     {
       name: "Kaggle Notebook",
       icon: <Database size={16} />,
-      url: "https://www.kaggle.com/code/hamnamubarak/iris-model/edit",
+      url: "https://www.kaggle.com/code/hamnamubarak/iris-chatbook",
       color: "bg-[#6e3e8e]",
     },
     {

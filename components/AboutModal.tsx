@@ -68,7 +68,7 @@ export default function AboutModal({ isOpen, onClose }: any) {
                   <Github size={16} /> GitHub
                 </a>
                 <a
-                  href="https://www.kaggle.com/code/hamnamubarak/iris-model/edit"
+                  href="https://www.kaggle.com/code/hamnamubarak/iris-chatbook"
                   target="_blank"
                   className="flex items-center justify-center gap-2 p-4 bg-[#20BEFF] text-white rounded-2xl font-bold text-xs hover:scale-105 transition-transform"
                 >
