@@ -9,7 +9,7 @@
 
 I made Iris. I took 12k+ real WhatsApp messages from my friend "Senpai" and baked her whole personality into a Llama-3 8B model. She says "Kk" instead of okay, rolls her eyes at you , calls you baka, and answers your questions. And now she can even look things up on the web when you ask about something recent
 
-[Try Iris live](https://iris-chat-bot-lac.vercel.app/) · [Kaggle notebook](https://www.kaggle.com/code/hamnamubarak/iris-chatbook) · [Hugging Face Space](https://huggingface.co/spaces/lilLilith/Iris-RAG/tree/main) · [Dev log](DEVLOG.md)
+[Try Iris live](https://iris-chat-bot-lac.vercel.app/) · [Kaggle notebook](https://www.kaggle.com/code/hamnamubarak/iris-chatbook) · [Hugging Face Space](https://huggingface.co/spaces/lilLilith/Iris-RAG/tree/main)
 
 ---
 
